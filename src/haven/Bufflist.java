@@ -34,40 +34,40 @@ public class Bufflist extends Widget {
     static final int num = 5;
 
     private void arrange(Widget imm) {
-	int i = 0;
-	Coord br = new Coord();
-	Collection<Pair<Buff, Coord>> mv = new ArrayList<>();
-	for(Widget wdg = child; wdg != null; wdg = wdg.next) {
-	    if(!(wdg instanceof Buff))
-		continue;
-	    Buff ch = (Buff)wdg;
-	    Coord c = new Coord((Buff.cframe.sz().x + margin) * (i % num), (Buff.cframe.sz().y + margin) * (i / num));
-	    if(ch == imm)
-		ch.c = c;
-	    else
-		mv.add(new Pair<>(ch, c));
-	    i++;
-	    if(c.x > br.x) br.x = c.x;
-	    if(c.y > br.y) br.y = c.y;
-	}
-	resize(br.add(Buff.cframe.sz()));
-	double off = 1.0 / mv.size(), coff = 0.0;
-	for(Pair<Buff, Coord> p : mv) {
-	    p.a.move(p.b, coff);
-	    coff += off;
-	}
+        int i = 0;
+        Coord br = new Coord();
+        Collection<Pair<Buff, Coord>> mv = new ArrayList<>();
+        for (Widget wdg = child; wdg != null; wdg = wdg.next) {
+            if (!(wdg instanceof Buff))
+                continue;
+            Buff ch = (Buff) wdg;
+            Coord c = new Coord((Buff.cframe.sz().x + margin) * (i % num), (Buff.cframe.sz().y + margin) * (i / num));
+            if (ch == imm)
+                ch.c = c;
+            else
+                mv.add(new Pair<>(ch, c));
+            i++;
+            if (c.x > br.x) br.x = c.x;
+            if (c.y > br.y) br.y = c.y;
+        }
+        resize(br.add(Buff.cframe.sz()));
+        double off = 1.0 / mv.size(), coff = 0.0;
+        for (Pair<Buff, Coord> p : mv) {
+            p.a.move(p.b, coff);
+            coff += off;
+        }
     }
 
     public void addchild(Widget child, Object... args) {
-	add(child);
-	arrange(child);
+        add(child);
+        arrange(child);
     }
 
     public void cdestroy(Widget ch) {
-	arrange(null);
+        arrange(null);
     }
 
     public void draw(GOut g) {
-	draw(g, false);
+        draw(g, false);
     }
 }
